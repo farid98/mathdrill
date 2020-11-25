@@ -86,7 +86,7 @@
 {#if quizOver}
   <div class="section">
     <div class="columns is-centered">
-      <div class="column is-3">
+      <div class="column is-6">
         <div class="notification is-primary is-size-1 has-text-centered">
           <p>Quiz Over</p>
           <p>You got {correctAnswers} out of {totalQuestions}</p>
