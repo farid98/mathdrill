@@ -117,25 +117,19 @@
     </div>
   </div>
 
-      <div class="columns is-centered">
-          <div class="column is-6">
-            <div class="columns is-centered is-mobile">
-
-    <div class="column  has-text-centered">
-      <div  class="box"  on:click={() => answerGiven(0)}>{choice[0]}</div>
-    </div>
-
-    <div  class="column  has-text-centered">
-      <div class="box"  on:click={() => answerGiven(1)} >{choice[1]}</div>
-    </div>
-    <div class="column has-text-centered">
-      <div class="box" on:click={() => answerGiven(2)}  >{choice[2]}</div>
+  <div class="columns is-centered">
+    <div class="column is-6">
+      <div class="columns is-centered is-mobile">
+        {#each Array(3) as _, row}
+          <div class="column  has-text-centered">
+            <div class="box" on:click={() => answerGiven(row)}>
+              {choice[row]}
+            </div>
+          </div>
+        {/each}
+      </div>
     </div>
   </div>
-
-</div>
-</div>
-
 
   {#if answered}
     <!-- Show the next button and tell if answer was right or wrong -->
