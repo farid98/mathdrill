@@ -1,58 +1,47 @@
 <script>
-  import { onMount } from "svelte";
+  import Practice from "./practice.svelte";
+  import Quiz from "./quiz.svelte";
+  import { state } from "./store.js";
 
-  var sum = "";
-  var numOne = 1;
-  var numTwo = 2;
 
-  var showing = false;
+//  var state = 2; // 0 = home screen. 1 = Quiz. 2 = practice
 
-  onMount(async () => {
-    await showAnother();
-  });
+function showQuiz() {
+	state.update(() => 2);
+}
 
-  function showAnother() {
-    numOne = Math.floor(Math.random() * 9 + 2);
-    numTwo = Math.floor(Math.random() * 9 + 2);
-    sum = numOne + " x " + numTwo;
-    showing = false;
-  }
+function showPractice() {
+	state.update(() => 1);}
 
-  function showMe() {
-    showing = true;
-  }
 </script>
 
-<section class="hero is-primary">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">Hi :)</h1>
-      <h1 class="subtitle">Let's practice times tables</h1>
-    </div>
-  </div>
-</section>
 
-<div class="section">
-  <div class="columns is-centered">
-    <div class="column is-4">
-      <div class="notification is-primary is-size-1">{sum}</div>
 
-      <div class="notification is-danger is-size-1">
-        <p>
-          {#if showing}Makes: {numOne * numTwo}{:else}?{/if}
-        </p>
-      </div>
-    </div>
-  </div>
+<div class="container">
+  {#if $state == 1}
+    <Practice />
+  {:else if $state == 2} 
+	<Quiz />
+	{:else}
+	
+	<section class="hero is-link">
+		<div class="hero-body">
+		  <div class="container">
+			<h1 class="title">Hi :) </h1>
+			<h1 class="subtitle">Let's learn the times tables</h1>
+		  </div>
+		</div>
+	  </section>
+	  
+	<div class="section">
+
+			<button on:click={showQuiz} class="button is-primary is-large">Take a Quiz
+			  </button>
+			  <p></p>
+			<button on:click={showPractice} class="button is-danger is-large">or Practice &nbsp;  </button>
+	
+	</div>
+	
+  {/if}
 </div>
-<section>
-  <div class="columns is-centered">
-    <div class="column is-4 is-centered has-text-centered">
-      <div class="buttons is-centered">
-        <button on:click={showAnother} class="button is-primary is-large">Try
-          Another</button>
-        <button on:click={showMe} class="button is-danger is-large">Show Me</button>
-      </div>
-    </div>
-  </div>
-</section>
+
