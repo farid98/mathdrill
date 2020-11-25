@@ -49,21 +49,26 @@
     numTwo = Math.floor(Math.random() * 9 + 2);
     sum = numOne + " x " + numTwo;
 
-    var correctNum = Math.floor(Math.random() * 3 );
+    var correctNum = Math.floor(Math.random() * 3);
 
-    console.log ("choice generation")
+    console.log("choice generation");
     choice[correctNum] = numOne * numTwo;
-    console.log(choice)
+    console.log(choice);
 
     for (var x = 0; x < 3; x++) {
-        console.log(x)
+      console.log(x);
       if (x == correctNum) continue;
-        console.log("changing")
+      console.log("changing");
 
-        var tt = 0
-
-        if (Math.floor(Math.random() == 0)) {tt = numOne} else (tt = numTwo)
-          choice[x] =  tt * Math.floor(Math.random() * 9 + 2);
+      var tt = 0;
+      var pp = 0;
+      do {
+        if (Math.floor(Math.random() == 0)) {
+          tt = numOne;
+        } else tt = numTwo;
+        pp = tt * Math.floor(Math.random() * 9 + 1);
+      } while (choice.includes(pp));
+      choice[x] = pp;
     }
   }
 </script>
@@ -100,9 +105,11 @@
     </div>
   </div>
 {:else}
+  <!-- Quiz in progress, show the question and options -->
   <div class="section">
     <div class="columns is-centered">
       <div class="column is-6">
+        <h1 class="has-text-centered">{currentQuestion} of {totalQuestions}</h1>
         <div class="notification is-primary is-size-1 has-text-centered">
           {sum}
         </div>
@@ -111,20 +118,21 @@
   </div>
 
   <div class="columns is-centered is-mobile">
+
     <div class="column is-2 has-text-centered">
-      <div on:click={() => answerGiven(0)} class="box is-primary is-size-5">
-        {choice[0]}
-      </div>
+      <div  class="box"  on:click={() => answerGiven(0)}>{choice[0]}</div>
     </div>
-    <div on:click={() => answerGiven(1)} class="column is-2 has-text-centered">
-      <div class="box is-primary is-size-5">{choice[1]}</div>
+
+    <div  class="column is-2 has-text-centered">
+      <div class="box"  on:click={() => answerGiven(1)} >{choice[1]}</div>
     </div>
-    <div on:click={() => answerGiven(2)} class="column is-2 has-text-centered">
-      <div class="box is-primary is-size-5">{choice[2]}</div>
+    <div class="column is-2 has-text-centered">
+      <div class="box" on:click={() => answerGiven(2)}  >{choice[2]}</div>
     </div>
   </div>
 
   {#if answered}
+    <!-- Show the next button and tell if answer was right or wrong -->
     <section>
       <div class="columns is-centered">
         <div class="column is-6 is-centered has-text-centered">
