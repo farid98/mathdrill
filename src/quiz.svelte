@@ -2,6 +2,8 @@
   import { onMount } from "svelte";
   import { children } from "svelte/internal";
   import { state } from "./store.js";
+  import { tables } from "./store.js";
+
 
   var sum = "x";
   var numOne = 1;
@@ -45,7 +47,10 @@
     answered = false;
     console.log("in Quiz-show another");
 
-    numOne = Math.floor(Math.random() * 9 + 2);
+    do  {
+        numOne = Math.floor(Math.random() * 9 + 2);
+      } while ($tables[numOne - 2] == 0)
+
     numTwo = Math.floor(Math.random() * 9 + 2);
     sum = numOne + " x " + numTwo;
 

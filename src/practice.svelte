@@ -1,6 +1,8 @@
 <script>
     import { onMount } from "svelte";
     import { state } from "./store.js";
+    import { tables } from "./store.js";
+
 
   
     var sum = "";
@@ -21,7 +23,15 @@ function showHome() {
 
   
     function showAnother() {
-      numOne = Math.floor(Math.random() * 9 + 2);
+
+
+      console.log("gonna pick numone")
+
+      do  {
+        numOne = Math.floor(Math.random() * 9 + 2);
+        console.log (numOne)
+      } while ($tables[numOne - 2] == 0)
+      
       numTwo = Math.floor(Math.random() * 9 + 2);
       sum = numOne + " x " + numTwo;
       showing = false;
