@@ -4,7 +4,6 @@
   import { state } from "./store.js";
   import { tables } from "./store.js";
 
-
   var sum = "x";
   var numOne = 1;
   var numTwo = 2;
@@ -15,6 +14,7 @@
   var answered = false;
   var answerIsCorrect = false;
   var quizOver = false;
+  var quizHolder = [];
 
   onMount(async () => {
     await showAnother();
@@ -47,23 +47,32 @@
     answered = false;
     console.log("in Quiz-show another");
 
-    do  {
+    var tries = 0;
+    do {
+      do {
         numOne = Math.floor(Math.random() * 9 + 2);
-      } while ($tables[numOne - 2] == 0)
+      } while ($tables[numOne - 2] == 0);
 
-    numTwo = Math.floor(Math.random() * 9 + 2);
-    sum = numOne + " x " + numTwo;
+      numTwo = Math.floor(Math.random() * 9 + 2);
+      sum = numOne + " x " + numTwo;
+      tries++; // this is a tie breaker. Sometimes we will NEED to have a duplicate (eg if only one number is selected and we are generating more more than 9 questions. In such a case there can be only 9 legal questins so one is bound to be repeated)
+
+      console.log("try number:",tries)
+
+      if (tries >=100) break; // ie dont check for duplicates. It aint gonna happen
+
+    } while (!quizHolder.includes({ numOne, numTwo }) ); // we dont want to repeat a pair, so we keep track and test
+
+    console.log("Found")
+    quizHolder.push({ numOne, numTwo });
+    console.log(quizHolder);
 
     var correctNum = Math.floor(Math.random() * 3);
 
-    console.log("choice generation");
-    choice[correctNum] = numOne * numTwo;
-    console.log(choice);
 
     for (var x = 0; x < 3; x++) {
       console.log(x);
       if (x == correctNum) continue;
-      console.log("changing");
 
       var tt = 0;
       var pp = 0;

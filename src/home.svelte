@@ -46,21 +46,24 @@ import { tables } from "./store.js";
 </div>
 
 
-<h1 class="title"> Pick Tables to practice:</h1>
+
+<div class="title ">Choose tables to practice:</div>
 
 
 {#each $tables as t, row}
 
     {#if t == 1}
-    <p  on:click={ () => toggle(row)   } class="button is-link ml-2">{row + 2}</p>
+    <p  on:click={ () => toggle(row)   } class="button ml-2 is-link ">{row + 2}</p>
     
     {:else}
-    <p on:click={ () => toggle(row)   } class="button is-light ml-2">{row + 2}</p>
+    <p on:click={ () => toggle(row)   } class="button ml-2 is-light ">{row + 2}</p>
     {/if}
 
 
 
 {/each}
+
+
 
 {#if (!$tables.includes(1))}
 
