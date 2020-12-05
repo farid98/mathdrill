@@ -78,12 +78,10 @@
       if (tries >= 100) break; // ie dont check for duplicates. It aint gonna happen
     } while (exists(numOne, numTwo)); // we dont want to repeat a pair, so we keep track and test
 
-    //    array.includes(array.find(el=>el.a==='b'));
-
-    console.log("Found");
     quizHolder.push({ numOne, numTwo });
 
     var correctNum = Math.floor(Math.random() * 3);
+    choice[correctNum] = numOne * numTwo
 
     for (var x = 0; x < 3; x++) {
       console.log(x);
