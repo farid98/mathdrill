@@ -37,8 +37,21 @@
     state.update(() => 0);
   }
 
+  function exists(a, b) {
+    var i;
+
+    for (i of quizHolder) {
+      if (i.numOne == a && i.numTwo == b) {
+        return true;
+      }
+    }
+    // was not found
+    return false;
+  }
+
   function showAnother() {
     currentQuestion += 1;
+    var maxtable = $tables.length
 
     if (currentQuestion > totalQuestions) {
       quizOver = true;
@@ -50,25 +63,27 @@
     var tries = 0;
     do {
       do {
-        numOne = Math.floor(Math.random() * 9 + 2);
+        numOne = Math.floor(Math.random() * maxtable + 2);
       } while ($tables[numOne - 2] == 0);
 
       numTwo = Math.floor(Math.random() * 9 + 2);
       sum = numOne + " x " + numTwo;
       tries++; // this is a tie breaker. Sometimes we will NEED to have a duplicate (eg if only one number is selected and we are generating more more than 9 questions. In such a case there can be only 9 legal questins so one is bound to be repeated)
 
-      console.log("try number:",tries)
+      console.log("try number:", tries);
+      console.log(quizHolder);
+      console.log({ numOne, numTwo });
+      console.log(exists(numOne, numTwo));
 
-      if (tries >=100) break; // ie dont check for duplicates. It aint gonna happen
+      if (tries >= 100) break; // ie dont check for duplicates. It aint gonna happen
+    } while (exists(numOne, numTwo)); // we dont want to repeat a pair, so we keep track and test
 
-    } while (!quizHolder.includes({ numOne, numTwo }) ); // we dont want to repeat a pair, so we keep track and test
+    //    array.includes(array.find(el=>el.a==='b'));
 
-    console.log("Found")
+    console.log("Found");
     quizHolder.push({ numOne, numTwo });
-    console.log(quizHolder);
 
     var correctNum = Math.floor(Math.random() * 3);
-
 
     for (var x = 0; x < 3; x++) {
       console.log(x);
